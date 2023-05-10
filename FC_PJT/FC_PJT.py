@@ -17,7 +17,6 @@ import matplotlib.pyplot as plt
 import matplotlib.font_manager as fm
 import re
 import glob
-import seaborn as sns
 import datetime
 
 # ------------------------------------------------------------------------
@@ -78,16 +77,11 @@ def clean_course_name(course_name):
         # Classify the date range to cleanse.
         if "~" in course_name:
             temp = course_name.split("~")[0]
-            # Remove open bracket to identify the year value.
-            temp = temp.replace("(", "")
-            try:
-                # if the value before ~ is in year format, remove the whole bracket.
-                if datetime.datetime.strptime(temp, "%y%m%d") == True:
-                    return course_name.split(")")[1]
-                else:
-                    return course_name
-            except ValueError:
-                raise course_name
+            # if the value before ~ is in year format, remove the whole bracket.
+            if len(temp) == 7:
+                return course_name.split(")")[1]
+            else:
+                return course_name
         else:
             return course_name
     else:
@@ -107,7 +101,7 @@ def course_packages(row):
     elif len(parts) > 1:
         # Classify [kit] first, as it needs to be separated from other [ ] covered words.
         if parts[0].startswith("[kit]"):
-            return "Kit"
+            return "[kit]"
         # Removing (( ))
         elif parts[0].startswith("(("):
             return parts[0].split("))")[1]
@@ -128,12 +122,17 @@ def course_packages(row):
 # Changing column names from Korean to English
 
 df = pd.read_csv(dataset+'eda-proj-fc-purchase.csv')
-df.rename(columns={"거래id":"transaction_id", "유형":"l_type", "고객id":"customer_id","코스ID":"courseID","사이트":"site", "포맷":"l_format", "카테고리":"l_categories", "코스(상품) 이름":"course_name", "거래일자":"transaction_date_time","쿠폰이름":"coupon_name","판매가격":"sold_price","결제수단":"payment_method","실거래금액":"actual_sold_price","쿠폰할인액":"coupon_discount","거래금액":"transaction_amount","환불금액":"refund_amount"}, inplace=True)
+df.rename(columns={"거래id":"transaction_id", "유형":"l_type", "고객id":"customer_id","코스ID":"courseID","사이트":"site", "포맷":"l_format",
+                   "카테고리":"l_categories", "코스(상품) 이름":"course_name", "거래일자":"transaction_date_time","쿠폰이름":"coupon_name",
+                   "판매가격":"sold_price","결제수단":"payment_method","실거래금액":"actual_sold_price","쿠폰할인액":"coupon_discount",
+                   "거래금액":"transaction_amount","환불금액":"refund_amount"
+                   },
+          inplace=True)
 df.to_csv(dataset + "rowdata_eng.csv", index=False)
 
-rowdata_eng = pd.read_csv(dataset+"rowdata_eng.csv")
-
 # ------------------------------------------------------------------------
+
+rowdata_eng = pd.read_csv(dataset+"rowdata_eng.csv")
 
 # Converting date_time to date and time.
 
@@ -155,7 +154,7 @@ timedone_data = rowdata_eng
 timedone_data["course_name"] = timedone_data["course_name"].apply(clean_course_name)
 course_name_cleansed = timedone_data
 
-# row_time_data.to_csv(dataset +"course_name_cleansed.csv", index = False)
+timedone_data.to_csv(dataset +"course_name_cleansed.csv", index = False)
 
 # ------------------------------------------------------------------------
 
@@ -174,6 +173,8 @@ for group_name, group_df in grouped_df:
     filename = f"{groupname.strip()}.csv"
     group_df.to_csv(GROUPED + f"{filename}", index=False)
 
+# ------------------------------------------------------------------------
+time.sleep(2)
 # ------------------------------------------------------------------------
 
 # Some packages only had one course each, needed to re-classify them as others
@@ -210,6 +211,40 @@ for file in all_file_locations["grouped"]:
 df_all = pd.concat([df_new, df_other])
 df_all.to_csv(FINAL_GROUP + "Others.csv", index=False)
 
+# ------------------------------------------------------------------------
 
+
+for file_loc in all_file_locations["group_final"]:
+    filename = file_loc.split("/")[-1].split(".")[0]
+    file = pd.read_csv(file_loc, encoding="utf-8-sig")
+    if file == FINAL_GROUP + "Others.csv":
+        pass
+    else:
+        pkg_prchsd_usr = file.groupby("course_group")["customer_id"].nunique().rename("pck_purchased_user")
+    print(pkg_prchsd_usr)
+
+
+#
+# # 첫 구매한 사람 수 계산
+# first_purchase_count = df.groupby('카테고리')['고객id'].nunique().rename('첫 구매한 사람 수')
+# # 각 카테고리별 총 구매 수 계산
+# total_purchase_count = df.groupby('카테고리')['거래id'].nunique().rename('총 구매수')
+# comparison_df = pd.concat([first_purchase_count, total_purchase_count], axis=1)
+# print(comparison_df)
+# # 그래프
+# plt.figure(figsize=(10, 6))
+# comparison_df_sorted = comparison_df.sort_values('총 구매수', ascending=False)
+# categories = comparison_df_sorted.index
+# first_purchase_count = comparison_df_sorted['첫 구매한 사람 수']
+# total_purchase_count = comparison_df_sorted['총 구매수']
+# bar_width = 0.35
+# index = np.arange(len(categories))
+# plt.barh(index, first_purchase_count, bar_width, label='첫 구매한 사람 수', color=(33/255, 229/255, 222/255))
+# plt.barh(index + bar_width, total_purchase_count, bar_width, label='총 구매수', color=(52/255, 155/255, 255/255), alpha=0.7)
+# plt.xlabel('구매 수')
+# plt.title('카테고리별 첫 구매한 사람 수와 총 구매 수 비교')
+# plt.yticks(index + bar_width / 2, categories)
+# plt.legend()
+# plt.show()
 
 print("Done")
