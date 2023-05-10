@@ -166,6 +166,8 @@ course_name_cleansed["course_name"] = course_name_cleansed["course_name"].apply(
 # Applying def course_packages.
 course_name_cleansed["course_group"] = course_name_cleansed.apply(course_packages, axis=1)
 
+course_name_cleansed.to_csv(dataset + "package_clarified.csv",index=False)
+
 # Generating CSV file for each Package.
 grouped_df = course_name_cleansed.groupby("course_group")
 for group_name, group_df in grouped_df:
@@ -177,13 +179,13 @@ for group_name, group_df in grouped_df:
 time.sleep(2)
 # ------------------------------------------------------------------------
 
+
 # Some packages only had one course each, needed to re-classify them as others
 for file in all_file_locations["grouped"]:
     df = pd.read_csv(file, low_memory=False)
     # print(file, file.split("/")[-1].split(".")[0] ,len(set(df["course_name"])))
 
 df_new = pd.DataFrame()
-df_other = pd.read_csv(GROUPED + "Other.csv")
 for file in all_file_locations["grouped"]:
     # We don't need to check Other.csv as we want to add more data to it
     if file == GROUPED + "Other.csv":
@@ -200,51 +202,79 @@ for file in all_file_locations["grouped"]:
             else:
                 # Add all packages that only has one course to df_new
                 df_new = pd.concat([df_new, df])
-
         else:
             # Adding all the packages with multiple courses to the final CSV folder.
             df = pd.read_csv(file, low_memory=False)
             filetitle = file.split("/")[-1].split(".")[0]
             df.to_csv(FINAL_GROUP + f"{filetitle}.csv", index=False)
 
-
+df_other = pd.read_csv(GROUPED + "Other.csv")
 df_all = pd.concat([df_new, df_other])
 df_all.to_csv(FINAL_GROUP + "Others.csv", index=False)
 
 # ------------------------------------------------------------------------
 
+total_pck = pd.read_csv(dataset + "package_clarified.csv", encoding="utf-8-sig")
+
+pck_prchsd_usr = total_pck.groupby("course_group")["customer_id"].nunique().rename("pck_purchased_user")
+total_prchsd_usr = total_pck.groupby("course_group")["transaction_id"].nunique().rename("total_purchased_user")
+comparison_df = pd.concat([pck_prchsd_usr, total_prchsd_usr], axis=1)
+
+
+# ------------------------------------------------------------------------
+
+fig, ax = plt.subplots()
 
 for file_loc in all_file_locations["group_final"]:
     filename = file_loc.split("/")[-1].split(".")[0]
-    file = pd.read_csv(file_loc, encoding="utf-8-sig")
-    if file == FINAL_GROUP + "Others.csv":
+    if filename == "Others":
         pass
     else:
-        pkg_prchsd_usr = file.groupby("course_group")["customer_id"].nunique().rename("pck_purchased_user")
-    print(pkg_prchsd_usr)
+        file = pd.read_csv(file_loc, encoding="utf-8-sig")
+        pck_prchsd_usr = file.groupby("course_group")["customer_id"].nunique().rename("pck_purchased_user")
+        ax.bar(pck_prchsd_usr.index, pck_prchsd_usr.values, width=0.8, label=filename[:4])
 
 
-#
-# # 첫 구매한 사람 수 계산
-# first_purchase_count = df.groupby('카테고리')['고객id'].nunique().rename('첫 구매한 사람 수')
-# # 각 카테고리별 총 구매 수 계산
-# total_purchase_count = df.groupby('카테고리')['거래id'].nunique().rename('총 구매수')
-# comparison_df = pd.concat([first_purchase_count, total_purchase_count], axis=1)
-# print(comparison_df)
-# # 그래프
-# plt.figure(figsize=(10, 6))
-# comparison_df_sorted = comparison_df.sort_values('총 구매수', ascending=False)
-# categories = comparison_df_sorted.index
-# first_purchase_count = comparison_df_sorted['첫 구매한 사람 수']
-# total_purchase_count = comparison_df_sorted['총 구매수']
-# bar_width = 0.35
-# index = np.arange(len(categories))
-# plt.barh(index, first_purchase_count, bar_width, label='첫 구매한 사람 수', color=(33/255, 229/255, 222/255))
-# plt.barh(index + bar_width, total_purchase_count, bar_width, label='총 구매수', color=(52/255, 155/255, 255/255), alpha=0.7)
-# plt.xlabel('구매 수')
-# plt.title('카테고리별 첫 구매한 사람 수와 총 구매 수 비교')
-# plt.yticks(index + bar_width / 2, categories)
-# plt.legend()
+# Add chart title and axis labels
+ax.set_title('Number of Unique Customers per Course Group')
+ax.set_xlabel('Course Group')
+ax.set_ylabel('Number of Unique Customers')
+plt.xticks(alpha=0.5, fontsize=7,rotation=45)
+ax.legend().remove()
+
+# Display the chart
 # plt.show()
+
+# ------------------------------------------------------------------------
+
+# others_mask = comparison_df["pck_purchased_user"] / comparison_df["pck_purchased_user"].sum() < 0.05
+# others_sum = comparison_df.loc[others_mask, "pck_purchased_user"].sum()
+# comparison_df = comparison_df[~others_mask]
+# comparison_df = comparison_df.append(pd.Series({"pck_purchased_user": others_sum}, name="Others"))
+
+def my_autopct(pct):
+    return ('%.3f' % pct) if pct > 5 else ''
+
+compsizes = comparison_df["pck_purchased_user"].values
+totalsizes = comparison_df["total_purchased_user"].values
+percentages = compsizes / totalsizes
+labels = comparison_df.index.values
+print(comparison_df)
+# print(sum(comparison_df.values))
+print(comparison_df.values.sum())
+print(labels)
+
+colors = ['blue', 'orange', 'green', 'red', 'skyblue', 'yellow']
+fig, ax = plt.subplots()
+ax.pie(percentages, labels=labels, colors=colors, autopct=my_autopct, startangle=90, counterclock=False)
+
+ax.tick_params(axis='both', which='both', length=0)
+ax.legend().set_visible(False)
+
+plt.title('Proportion of Customers per Course Group')
+
+
+plt.axis("equal")
+plt.show()
 
 print("Done")
