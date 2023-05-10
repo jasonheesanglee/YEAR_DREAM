@@ -338,5 +338,8 @@ pyrightconfig.json
 *.xlsx
 *.csv
 *.txt
-
-
+*.zip
+/dataset/
+/dataset
+*.swp
+*.png
