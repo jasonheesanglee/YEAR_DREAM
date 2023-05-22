@@ -1,0 +1,144 @@
+Last login: Mon May 22 14:30:43 on ttys001
+(base) ➜  ~ jupyter notebook
+
+  _   _          _      _
+ | | | |_ __  __| |__ _| |_ ___
+ | |_| | '_ \/ _` / _` |  _/ -_)
+  \___/| .__/\__,_\__,_|\__\___|
+       |_|
+
+Read the migration plan to Notebook 7 to learn about the new features and the actions to take if you are using extensions.
+
+https://jupyter-notebook.readthedocs.io/en/latest/migrate_to_notebook7.html
+
+Please note that updating to Notebook 7 might break some of your extensions.
+
+[W 17:39:54.434 NotebookApp] Loading JupyterLab as a classic notebook (v6) extension.
+[I 2023-05-22 17:39:54.437 LabApp] JupyterLab extension loaded from /opt/homebrew/Caskroom/miniconda/base/lib/python3.10/site-packages/jupyterlab
+[I 2023-05-22 17:39:54.437 LabApp] JupyterLab application directory is /opt/homebrew/Caskroom/miniconda/base/share/jupyter/lab
+[I 17:39:54.441 NotebookApp] Serving notebooks from local directory: /Users/b05
+[I 17:39:54.441 NotebookApp] Jupyter Notebook 6.5.4 is running at:
+[I 17:39:54.441 NotebookApp] http://localhost:8888/?token=3b4c588a0f0f297535e7debe7358f140be9b8694487ce877
+[I 17:39:54.441 NotebookApp]  or http://127.0.0.1:8888/?token=3b4c588a0f0f297535e7debe7358f140be9b8694487ce877
+[I 17:39:54.441 NotebookApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).
+[C 17:39:54.444 NotebookApp]
+
+    To access the notebook, open this file in a browser:
+        file:///Users/b05/Library/Jupyter/runtime/nbserver-13155-open.html
+    Or copy and paste one of these URLs:
+        http://localhost:8888/?token=3b4c588a0f0f297535e7debe7358f140be9b8694487ce877
+     or http://127.0.0.1:8888/?token=3b4c588a0f0f297535e7debe7358f140be9b8694487ce877
+[W 17:40:33.071 NotebookApp] Notebook Desktop/seaborn_image.ipynb is not trusted
+[I 17:40:33.216 NotebookApp] Kernel started: 76119d78-a92f-43b9-beec-c5696c3689e6, name: python3
+[I 17:41:32.407 NotebookApp] Kernel shutdown: 76119d78-a92f-43b9-beec-c5696c3689e6
+[W 17:41:32.634 NotebookApp] 404 DELETE /api/sessions/b838b3e1-7a08-467c-92c9-aef5a5f500bc (::1): Session not found: session_id='b838b3e1-7a08-467c-92c9-aef5a5f500bc'
+[W 17:41:32.635 NotebookApp] Session not found: session_id='b838b3e1-7a08-467c-92c9-aef5a5f500bc'
+[W 17:41:32.635 NotebookApp] 404 DELETE /api/sessions/b838b3e1-7a08-467c-92c9-aef5a5f500bc (::1) 0.670000ms referer=http://localhost:8888/notebooks/Desktop/seaborn_image.ipynb
+[W 17:41:35.917 NotebookApp] 404 DELETE /api/sessions/b838b3e1-7a08-467c-92c9-aef5a5f500bc (::1): Session not found: session_id='b838b3e1-7a08-467c-92c9-aef5a5f500bc'
+[W 17:41:35.917 NotebookApp] Session not found: session_id='b838b3e1-7a08-467c-92c9-aef5a5f500bc'
+[W 17:41:35.917 NotebookApp] 404 DELETE /api/sessions/b838b3e1-7a08-467c-92c9-aef5a5f500bc (::1) 1.290000ms referer=http://localhost:8888/notebooks/Desktop/seaborn_image.ipynb
+[I 17:41:35.945 NotebookApp] Kernel started: 54c675e5-5623-4155-b53a-370cc92c305a, name: python3
+[I 17:41:42.839 NotebookApp] Kernel restarted: 54c675e5-5623-4155-b53a-370cc92c305a
+[W 17:41:42.846 NotebookApp] Replacing stale connection: 54c675e5-5623-4155-b53a-370cc92c305a:1fce9799196741bead65066c9eac6d9b
+[W 17:41:43.342 NotebookApp] zmq message arrived on closed channel
+[I 17:41:43.342 NotebookApp] Starting buffering for 54c675e5-5623-4155-b53a-370cc92c305a:1fce9799196741bead65066c9eac6d9b
+[I 17:41:43.345 NotebookApp] Restoring connection for 54c675e5-5623-4155-b53a-370cc92c305a:1fce9799196741bead65066c9eac6d9b
+[I 17:41:43.847 NotebookApp] Replaying 12 buffered messages
+[I 17:42:33.194 NotebookApp] Saving file at /Desktop/seaborn_image.ipynb
+[I 17:44:33.181 NotebookApp] Saving file at /Desktop/seaborn_image.ipynb
+[I 17:45:07.688 NotebookApp] Saving file at /Desktop/seaborn_image.ipynb
+[I 17:45:10.024 NotebookApp] Starting buffering for 54c675e5-5623-4155-b53a-370cc92c305a:1fce9799196741bead65066c9eac6d9b
+[I 17:45:10.027 NotebookApp] Kernel shutdown: 54c675e5-5623-4155-b53a-370cc92c305a
+^C[I 17:45:18.116 NotebookApp] interrupted
+Serving notebooks from local directory: /Users/b05
+0 active kernels
+Jupyter Notebook 6.5.4 is running at:
+http://localhost:8888/?token=3b4c588a0f0f297535e7debe7358f140be9b8694487ce877
+ or http://127.0.0.1:8888/?token=3b4c588a0f0f297535e7debe7358f140be9b8694487ce877
+Shutdown this notebook server (y/[n])? ^C[C 17:45:18.270 NotebookApp] received signal 2, stopping
+[I 17:45:18.271 NotebookApp] Shutting down 0 kernels
+[I 17:45:18.271 NotebookApp] Shutting down 0 terminals
+(base) ➜  ~ ls
+Applications                    Public
+Desktop                         Untitled.txt
+Documents                       java_error_in_pycharm.hprof
+Downloads                       java_error_in_pycharm_26415.log
+Library                         jbr_err_pid26415.log
+Movies                          my-repo
+Music                           updated_spark_shortcuts.txt
+Pictures                        zsh-syntax-highlighting
+Practice
+(base) ➜  ~ cd Desktop
+(base) ➜  Desktop ls
+1674693177446.jpeg
+530A6DBA-9B87-47CB-BC11-8F8B12AEBA4C.jpg
+Category_analysis.ipynb
+Competitions
+Daily Update
+Doyeon.png
+E06717BD-EFFF-492E-BDE1-1ED747FB0BC1.jpg
+FC PJT Script.pdf
+FCPJT-NDA
+Git_Group_PJT
+Lecture3 Linear_regression_practice_updated.pptx
+ML_overall_process_updated.ipynb
+Screenshot
+YEAR_DREAM
+[이어드림 스쿨] 제 1차 모의 코딩테스트 답안코드.zip
+doyeon_close_up.jpg
+drive-download-20230522T023856Z-001
+drive-download-20230522T023856Z-001 2
+seaborn_image.ipynb
+기업 정리.xlsx
+시각화코드_v1
+이어드림자료
+독학
+태그_크롤링.ipynb
+(base) ➜  Desktop cd YEAR_DREAM
+(base) ➜  YEAR_DREAM git:(main) ✗ ls
+CSE 101           Others            README.md         linear_regression
+LICENSE           PythonInseop      SQL_              pandas
+(base) ➜  YEAR_DREAM git:(main) ✗ git status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	linear_regression/
+
+nothing added to commit but untracked files present (use "git add" to track)
+(base) ➜  YEAR_DREAM git:(main) ✗ ls linear_regression
+new_data.csv
+sklearn_linear_regression_example_basics.ipynb
+sklearn_linear_regression_train_test.ipynb
+training_data.csv
+training_test_data.csv
+(base) ➜  YEAR_DREAM git:(main) ✗ cd linear_regression
+(base) ➜  linear_regression git:(main) ✗ git status
+On branch main
+
+Your branch is up to date with 'origin/main'.
+
+# Created by https://www.toptal.com/developers/gitignore/api/macos,pycharm,python,jupyternotebooks
+# Edit at https://www.toptal.com/developers/gitignore?templates=macos,pycharm,python,jupyternotebooks
+
+### JupyterNotebooks ###
+# gitignore template for Jupyter Notebooks
+# website: http://jupyter.org/
+
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
+
+# IPython
+profile_default/
+ipython_config.py
+
+# Remove previous ipynb_checkpoints
+#   git rm -r .ipynb_checkpoints/
+
+### macOS ###
+# General
+.DS_Store
+.AppleDouble
+.LSOverride
+-- INSERT --
