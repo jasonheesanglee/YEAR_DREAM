@@ -343,3 +343,5 @@ pyrightconfig.json
 /dataset
 *.swp
 *.png
+6.2 코스피 지수 200 일별 시세 크롤링 (코드 완료).ipynb
+
