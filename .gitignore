@@ -332,6 +332,7 @@ pyrightconfig.json
 
 # End of https://www.toptal.com/developers/gitignore/api/macos,pycharm,python,jupyternotebooks
 
+*.xls
 *.html
 *.DS_Store
 *.idea
